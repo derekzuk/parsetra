@@ -1,36 +1,47 @@
-# ParseTra
+# parsetra
 
 [![CI](https://github.com/derekzuk/parsetra/actions/workflows/ci.yml/badge.svg)](https://github.com/derekzuk/parsetra/actions/workflows/ci.yml)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.derekzuk/parsetra.svg?label=Maven%20Central)](https://central.sonatype.com/artifact/io.github.derekzuk/parsetra)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-A lightweight, dependency-free Java library for parsing and formatting **human-readable durations** and **data sizes**.
+Lightweight Java library for parsing and formatting human-readable **durations** and **data sizes**. Zero dependencies, Java 8+.
 
-## Status
-
-Early development / API unstable
+---
 
 ## Features
 
-- **Durations**: Parse `"2h 30m"`, `"1.5d"`, `"90m"`, `"1500ms"` → `java.time.Duration`
-- **Sizes**: Parse `"10MB"`, `"1.5GB"`, `"2GiB"` → `long` bytes
-- **Formatting**: Format durations and sizes back to human-readable strings
-- **No dependencies**: Java 8+ only
-- **Small & fast**: Deterministic parsing, thread-safe, clear errors
+- **Durations** — Parse `"2h 30m"`, `"1.5d"`, `"90m"` into `java.time.Duration`; format back to compact or human-readable strings.
+- **Data sizes** — Parse `"10MB"`, `"1.5GB"`, `"2GiB"` into byte counts; format with decimal (KB, MB) or binary (KiB, MiB) units.
+- **Strict & lenient** — Choose strict tokenization (no extra spaces) or lenient (trim, multiple spaces).
+- **Dependency-free** — No third-party libs. Small footprint, thread-safe, deterministic.
 
-## Quick Start
+## Installation
 
-### Maven
+**Maven:**
 
 ```xml
 <dependency>
-    <groupId>io.parsetra</groupId>
+    <groupId>io.github.derekzuk</groupId>
     <artifactId>parsetra</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.1.0</version>
 </dependency>
 ```
 
-*(Use `0.1.0` for releases once published.)*
+**Gradle (Kotlin):**
 
-### Duration
+```kotlin
+implementation("io.github.derekzuk:parsetra:0.1.0")
+```
+
+**Gradle (Groovy):**
+
+```groovy
+implementation 'io.github.derekzuk:parsetra:0.1.0'
+```
+
+## Usage
+
+### Durations
 
 ```java
 import io.parsetra.duration.Durations;
@@ -39,19 +50,18 @@ import java.time.Duration;
 // Parse (lenient: trims, allows spaces)
 Duration d = Durations.parse("2h 30m");
 Duration d = Durations.parse("1.5d");
-Duration d = Durations.parse("90m");
 Duration d = Durations.parse("1d 4h 10m");
 
 // Strict: no leading/trailing whitespace, single space between segments
 Duration d = Durations.parseStrict("2h30m");
 
 // Format
-String s = Durations.format(d);        // "2h30m"
-String s = Durations.formatCompact(d); // "150m"
+String s = Durations.format(d);         // "2h30m"
+String s = Durations.formatCompact(d);  // "150m"
 String s = Durations.formatHuman(d);   // "2h 30m"
 ```
 
-### Size
+### Data sizes
 
 ```java
 import io.parsetra.size.Sizes;
@@ -66,51 +76,27 @@ Sizes.parseStrict("10MB");
 Sizes.parseLenient(" 10 mb ");
 
 // Format
-Sizes.format(1536);        // "1.5KB"
-Sizes.formatBinary(1536);  // "1.5KiB"
-Sizes.formatBytes(1536);  // "1536B"
+Sizes.format(1536);         // "1.5KB"
+Sizes.formatBinary(1536);   // "1.5KiB"
+Sizes.formatBytes(1536);    // "1536B"
 ```
 
-## Supported Units
+## Supported units
 
-### Duration
+| Duration | Size (decimal) | Size (binary) |
+|----------|----------------|---------------|
+| `ms`, `s`, `m`, `h`, `d` | `B`, `KB`, `MB`, `GB`, `TB` | `B`, `KiB`, `MiB`, `GiB`, `TiB` |
 
-| Unit | Meaning   |
-|------|-----------|
-| ms   | milliseconds |
-| s    | seconds   |
-| m    | minutes  |
-| h    | hours    |
-| d    | days     |
+Multi-segment and fractional values are supported (e.g. `2h 30m`, `1.5d`). Units are case-insensitive.
 
-Multi-segment and fractional values are supported (e.g. `2h 30m`, `1.5d`). Case-insensitive.
+## Error handling
 
-### Size
+Parsing throws `IllegalArgumentException` for invalid input: unknown unit, overflow, empty string, or invalid format.
 
-**Decimal (base 1000):** B, KB, MB, GB, TB  
-**Binary (base 1024):** B, KiB, MiB, GiB, TiB  
+## Documentation
 
-Case-insensitive.
-
-## Error Handling
-
-Parsing throws `IllegalArgumentException` for:
-
-- Unknown unit
-- Overflow
-- Empty string
-- Invalid format
-- Multiple decimals in a segment
+- [Javadoc](https://javadoc.io/doc/io.github.derekzuk/parsetra/latest) (when published)
 
 ## License
 
-Licensed under the [Apache License, Version 2.0](LICENSE).
-
-## Publishing to Maven Central
-
-For maintainers: to publish a release to Maven Central (or Maven Repository):
-
-1. **Version**: Set a release version in `pom.xml` (e.g. `1.0.0`). Do not publish `-SNAPSHOT` to Central.
-2. **Build**: `mvn clean package` produces the main JAR, `-sources.jar`, and `-javadoc.jar` (required by Central).
-3. **Signing**: All artifacts must be GPG-signed. Use the [Central Publisher Portal](https://central.sonatype.com/) or the `central-publishing-maven-plugin` / `maven-gpg-plugin` and OSSRH.
-4. **POM**: This project already includes required metadata: `name`, `description`, `url`, `licenses`, `developers`, `scm`. Update the `<url>`, `<scm>`, and `<developers>` to your repository and identity before publishing.
+[MIT](LICENSE)
