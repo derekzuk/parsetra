@@ -38,9 +38,19 @@
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <junit.version>5.10.0</junit.version>
-        <!-- Skip GPG signing by default so mvn install works without a TTY. Use -Dgpg.skip=false when publishing. -->
+        <!-- Skip GPG signing by default so mvn install works without a TTY. Use -Prelease when publishing. -->
         <gpg.skip>true</gpg.skip>
     </properties>
+
+    <profiles>
+        <!-- Activate with -Prelease to sign and publish to Maven Central. Run in a terminal with: export GPG_TTY=$(tty) -->
+        <profile>
+            <id>release</id>
+            <properties>
+                <gpg.skip>false</gpg.skip>
+            </properties>
+        </profile>
+    </profiles>
 
     <dependencies>
         <dependency>
