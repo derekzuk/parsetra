@@ -1,6 +1,12 @@
 # ParseTra
 
+[![CI](https://github.com/derekzuk/parsetra/actions/workflows/ci.yml/badge.svg)](https://github.com/derekzuk/parsetra/actions/workflows/ci.yml)
+
 A lightweight, dependency-free Java library for parsing and formatting **human-readable durations** and **data sizes**.
+
+## Status
+
+Early development / API unstable
 
 ## Features
 
@@ -18,11 +24,11 @@ A lightweight, dependency-free Java library for parsing and formatting **human-r
 <dependency>
     <groupId>io.parsetra</groupId>
     <artifactId>parsetra</artifactId>
-    <version>1.0.0</version>
+    <version>0.1.0-SNAPSHOT</version>
 </dependency>
 ```
 
-*(Use `1.0.0-SNAPSHOT` for development builds.)*
+*(Use `0.1.0` for releases once published.)*
 
 ### Duration
 

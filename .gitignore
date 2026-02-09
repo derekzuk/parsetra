@@ -1,5 +1,9 @@
 # Maven
 target/
+
+# Gradle
+build/
+.gradle/
 pom.xml.tag
 pom.xml.releaseBackup
 *.jar

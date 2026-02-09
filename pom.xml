@@ -4,37 +4,33 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>io.parsetra</groupId>
+    <groupId>io.github.derekzuk</groupId>
     <artifactId>parsetra</artifactId>
-    <!-- For Maven Central: use a release version (e.g. 1.0.0), not -SNAPSHOT -->
-    <version>1.0.0-SNAPSHOT</version>
+    <version>0.1.0</version>
     <packaging>jar</packaging>
 
-    <name>ParseTra</name>
-    <description>Human-readable duration and data size parsing and formatting for Java. Parse strings like "2h 30m" or "10MB" into java.time.Duration and byte counts; format back to human-readable strings. Dependency-free, Java 8+.</description>
-    <url>https://github.com/parsetra/parsetra</url>
+    <name>parsetra</name>
+    <description>Lightweight Java library for parsing human-readable durations and data sizes.</description>
+    <url>https://github.com/derekzuk/parsetra</url>
 
     <licenses>
         <license>
-            <name>The Apache License, Version 2.0</name>
-            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
-            <distribution>repo</distribution>
+            <name>MIT License</name>
+            <url>https://opensource.org/licenses/MIT</url>
         </license>
     </licenses>
 
     <developers>
         <developer>
-            <name>ParseTra Contributors</name>
-            <email>parsetra@users.noreply.github.com</email>
-            <url>https://github.com/parsetra/parsetra</url>
+            <id>derekzuk</id>
+            <name>Derek Zuk</name>
         </developer>
     </developers>
 
     <scm>
-        <connection>scm:git:git://github.com/parsetra/parsetra.git</connection>
-        <developerConnection>scm:git:ssh://github.com:parsetra/parsetra.git</developerConnection>
-        <url>https://github.com/parsetra/parsetra</url>
-        <tag>HEAD</tag>
+        <connection>scm:git:git://github.com/derekzuk/parsetra.git</connection>
+        <developerConnection>scm:git:ssh://github.com/derekzuk/parsetra.git</developerConnection>
+        <url>https://github.com/derekzuk/parsetra</url>
     </scm>
 
     <properties>
@@ -115,11 +111,36 @@
                             <docencoding>UTF-8</docencoding>
                             <show>protected</show>
                             <nohelp>true</nohelp>
-                            <footer>ParseTra - Human-readable duration and size parsing for Java.</footer>
-                            <bottom><![CDATA[Copyright &#169; ParseTra Contributors. All rights reserved.]]></bottom>
+                            <footer>parsetra - Lightweight Java library for parsing human-readable durations and data sizes.</footer>
+                            <bottom><![CDATA[Copyright &#169; Derek Zuk. All rights reserved.]]></bottom>
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <!-- GPG Signing (required for Maven Central) -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Sonatype Central publishing (hooks into mvn deploy) -->
+            <plugin>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+                <version>0.4.0</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <publishingServerId>central</publishingServerId>
+                </configuration>
             </plugin>
         </plugins>
     </build>
