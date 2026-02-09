@@ -38,6 +38,8 @@
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <junit.version>5.10.0</junit.version>
+        <!-- Skip GPG signing by default so mvn install works without a TTY. Use -Dgpg.skip=false when publishing. -->
+        <gpg.skip>true</gpg.skip>
     </properties>
 
     <dependencies>
@@ -117,11 +119,14 @@
                     </execution>
                 </executions>
             </plugin>
-            <!-- GPG Signing (required for Maven Central) -->
+            <!-- GPG Signing (required for Maven Central). Skip by default so "mvn install" works without a TTY. Use -Dgpg.skip=false when publishing. -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
                 <version>3.1.0</version>
+                <configuration>
+                    <skip>${gpg.skip}</skip>
+                </configuration>
                 <executions>
                     <execution>
                         <id>sign-artifacts</id>
