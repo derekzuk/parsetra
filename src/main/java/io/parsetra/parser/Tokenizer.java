@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Tokenizes a string into number+unit pairs (e.g. "2h 30m" or "2h30m" -> ["2","h"], ["30","m"]).
+ * Tokenizes a string into number+unit pairs (e.g. "2h 30m" or "2h30m" -&gt; ["2","h"], ["30","m"]).
  * Deterministic character-by-character parsing. Thread-safe.
  */
 public final class Tokenizer {
