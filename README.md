@@ -95,7 +95,8 @@ Parsing throws `IllegalArgumentException` for invalid input: unknown unit, overf
 
 ## Documentation
 
-- [Javadoc](https://javadoc.io/doc/io.github.derekzuk/parsetra/latest) (when published)
+- [Javadoc](https://javadoc.io/doc/io.github.derekzuk/parsetra/latest)
+- [Maven Central](https://central.sonatype.com/artifact/io.github.derekzuk/parsetra)
 
 ## License
 
